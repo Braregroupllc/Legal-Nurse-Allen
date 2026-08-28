@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Website, Kept Small</title>
+<style>
+  :root{
+    color-scheme: light;
+    --paper:#ffffff;
+    --ink:#1b1b1b;
+    --ink-2:#565656;
+    --ink-3:#8a8a8a;
+    --rule:#e4e4e0;
+    --panel:#f6f6f4;
+    --panel-line:#e6e6e1;
+    --mark:#6b5b49;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-head: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --measure: 40rem;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:16.5px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  .doc{max-width:50rem;margin:0 auto;padding:3.5rem 2rem 6rem}
+
+  .meta{
+    font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-3);margin:0;
+  }
+  h1{
+    font-family:var(--font-head);font-weight:600;font-size:2.15rem;line-height:1.12;
+    letter-spacing:.005em;text-wrap:balance;margin:.7rem 0 0;
+  }
+  .lede{color:var(--ink-2);max-width:var(--measure);margin:1rem 0 0;font-size:1.03rem}
+  .head{border-bottom:1px solid var(--rule);padding-bottom:1.6rem}
+
+  section{margin-top:3rem}
+  .eyebrow{
+    font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-3);margin:0;display:flex;align-items:baseline;gap:.6rem;
+  }
+  .eyebrow .n{color:var(--mark);font-weight:600}
+  h2{
+    font-family:var(--font-head);font-weight:600;font-size:1.42rem;line-height:1.25;
+    text-wrap:balance;margin:.45rem 0 1rem;max-width:var(--measure);
+  }
+  h3{
+    font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-2);margin:1.8rem 0 .5rem;
+  }
+  p,ul,ol{max-width:var(--measure)}
+  p{margin:.9rem 0}
+  li{margin:.35rem 0}
+  strong{font-weight:600}
+  a{color:var(--ink);text-underline-offset:2px}
+
+  .callout{
+    border-left:2px solid var(--mark);background:var(--panel);
+    padding:.9rem 1.15rem;margin:1.3rem 0;max-width:var(--measure);border-radius:0 4px 4px 0;
+  }
+  .callout p{margin:.3rem 0}
+  .callout .tag{
+    font-family:var(--font-mono);font-size:.64rem;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--mark);margin-bottom:.4rem;
+  }
+
+  .scroll{overflow-x:auto;max-width:50rem;margin:1.4rem 0}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:42rem}
+  th,td{text-align:left;padding:.7rem .9rem;border-bottom:1px solid var(--rule);vertical-align:top}
+  thead th{
+    background:var(--panel);color:var(--ink);font-family:var(--font-mono);
+    font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;
+  }
+  td:nth-child(1){width:19%;font-weight:600}
+  td:nth-child(3){width:31%;color:var(--ink-2)}
+  tbody tr:last-child td{border-bottom:none}
+
+  figure{margin:1.5rem 0;max-width:50rem}
+  figure svg{
+    display:block;width:100%;height:auto;background:var(--paper);
+    border:1px solid var(--rule);border-radius:6px;padding:1rem;
+  }
+  figcaption{font-size:.85rem;color:var(--ink-2);margin-top:.7rem;max-width:var(--measure)}
+
+  .fig{color:var(--ink)}
+  .fig text{font-family:var(--font-body);fill:currentColor}
+  .fig .mono{font-family:var(--font-mono)}
+  .fig .node{fill:var(--paper);stroke:currentColor;stroke-width:1.3}
+  .fig .node.opt{fill:#f7f6f4}
+  .fig .muted{color:var(--ink-2)}
+  .fig .opt{color:var(--mark)}
+  .fig .lbl{font-size:12.5px;font-weight:600}
+  .fig .eb{font-size:9.5px;letter-spacing:.12em}
+  .fig .sub{font-size:11px}
+  .fig .tiny{font-size:9.5px}
+  .fig .conn{stroke:#c2c2bc;stroke-width:1.2;fill:none}
+  .fig .conn-opt{stroke:var(--mark);stroke-width:1.2;fill:none}
+  .fig .dash{stroke-dasharray:5 3}
+
+  ol.q{padding-left:1.4rem}
+  ol.q li{margin:.5rem 0;padding-left:.15rem}
+  ol.q li::marker{font-family:var(--font-mono);font-size:.82rem;color:var(--ink-3)}
+
+  .closing{
+    margin-top:2.75rem;padding-top:1.4rem;border-top:1px solid var(--rule);
+    color:var(--ink-2);font-style:italic;max-width:var(--measure);
+  }
+
+  @media (max-width:640px){
+    .doc{padding:2.5rem 1.15rem 4rem}
+    h1{font-size:1.8rem}
+    body{font-size:16px}
+  }
+
+  @media print{
+    @page{margin:16mm}
+    body{font-size:10.5pt;line-height:1.5}
+    .doc{max-width:none;margin:0;padding:0}
+    a{text-decoration:none}
+    section{margin-top:1.6rem}
+    figure,section,table,.callout,tr{break-inside:avoid}
+    figure svg{border:1px solid #ccc}
+  }
+</style>
+</head>
+<body>
+<main class="doc">
+
+  <header class="head">
+    <p class="meta">Website recommendation &nbsp;&middot;&nbsp; 26 August 2026</p>
+    <h1>The website, kept small</h1>
+    <p class="lede">My recommendation for the Allen Legal Nurse Consultants website: keep it small, make it
+    easy to find, and sharpen what is already there rather than building something larger. Below is where
+    the site stands today, what I would change, the full page list with what goes on each page and how it
+    helps, and the few items I need you to confirm before I start.</p>
+  </header>
+
+  <section>
+    <p class="eyebrow"><span class="n">01</span><span>Where the site stands today</span></p>
+    <h2>A clean site that does not yet say what you are known for</h2>
+    <p>The site has <strong>18 pages</strong> today: home, solutions, services, technology and delivery,
+    about, process, resources, contact; three solution detail pages (chronology, case screening, DME
+    observation); three resource pages (LNC guide, timeline worksheet, attorney intake); and four legal
+    pages (privacy, terms, accessibility, confidentiality). It is clean, professional, and covers the
+    basics. Two things stand out to me:</p>
+    <ul>
+      <li><strong>It reads as a general legal nurse consultant brochure.</strong> It does not say plainly
+      what you are known for: the niche work (board of nursing defense, NP and PA malpractice, IME and DME
+      observation), the states you cover, or the faster AI-assisted turnaround. Someone searching for one
+      of those needs, rather than for you by name, finds nothing on the site that matches.</li>
+      <li><strong>The other direction is to make the site much larger.</strong> One option is to build 15
+      or more new landing pages, one for every specialty, every state, and every buyer type, as a full
+      search-optimization project. I looked at that and I do not think we need it yet. It is more site
+      than the goal calls for, and more to write and keep current.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="eyebrow"><span class="n">02</span><span>What I want the site to do</span></p>
+    <h2>The job is to be found and to be contacted</h2>
+    <p>Here is the job as I see it:</p>
+    <ul>
+      <li>Be the clear, professional page people land on when they search you or the firm by name, or
+      follow a referral, and make it obvious how to reach you by phone or email.</li>
+      <li>Be clear and factual enough that an AI assistant (ChatGPT, Google&rsquo;s AI answers, and
+      similar) can state what you do, who you help, and where.</li>
+      <li>Stay small and easy to keep current.</li>
+      <li>Not be a lead-generation funnel with a separate page for every state and city, at least not
+      now.</li>
+    </ul>
+    <p>If that is the job, the site does not need to get bigger. It needs to get sharper.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow"><span class="n">03</span><span>What I recommend</span></p>
+    <h2>Keep your structure, sharpen it, and add three pages</h2>
+    <p>Your current shape already matches what I would recommend, so this is tightening, not a rebuild.
+    The changes:</p>
+    <ul>
+      <li><strong>Remove Solutions</strong> and move its content into <strong>Services</strong>. The two
+      pages carry the same message.</li>
+      <li><strong>Remove Technology and Delivery</strong> as its own page. Move the parts worth keeping
+      (secure workflow, source-linked references, defined scope) into Services as a short
+      &ldquo;How the work is delivered&rdquo; section.</li>
+      <li><strong>Keep Process</strong>. It sets expectations and shows the confidentiality steps, which
+      helps an attorney decide to engage.</li>
+      <li><strong>Check Attorney Intake against Contact.</strong> Both collect the same kind of
+      information. Keep one.</li>
+      <li><strong>Keep the three detail pages.</strong> They already follow the right pattern, and
+      <strong>DME and IME Observation</strong> is one of the niche pages either way. It gets sharpened,
+      not rebuilt.</li>
+      <li><strong>Add BON Defense Consulting</strong> and <strong>NP and PA Malpractice Review</strong> as
+      their own pages, in the same pattern you already use.</li>
+      <li><strong>Add one Service Areas page</strong> covering Georgia, Florida, and North Carolina on a
+      single page, not one page per state.</li>
+    </ul>
+    <p>I recommend the three new pages because the market research points straight at them:</p>
+    <ul>
+      <li><strong>Board of nursing defense</strong> is described as an underdeveloped, high-margin market
+      with steady, non-litigation demand, and almost no consultant has a page for it.</li>
+      <li><strong>NP and PA malpractice</strong> is the fastest-growing malpractice vertical, with high
+      claim values, and the dual standard-of-care analysis it needs is something most reviewers cannot
+      do.</li>
+      <li><strong>Service areas</strong> is where the states live as real text, which is what search and
+      AI assistants match on. Your research calls for state-level pages; one consolidated page delivers
+      most of that value at a fraction of the upkeep, and it answers &ldquo;do you cover my
+      state&rdquo; directly.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="eyebrow"><span class="n">04</span><span>The full site, page by page</span></p>
+    <h2>What goes on each page and how it helps</h2>
+
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr><th scope="col">Page</th><th scope="col">What goes on it</th><th scope="col">How it helps</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Home</td>
+            <td>A headline naming what you do and the faster AI-assisted turnaround. One line naming the states. Three short paths for the reader: plaintiff firms, defense teams, and board or insurer work. Cards for the signature work. A short founder intro with your photo and credentials. A clear prompt to make contact.</td>
+            <td>It is the page most people land on. In a few seconds it tells a visitor, and an AI assistant, what you do, who you help, and why you are faster, then sends them to the right page.</td>
+          </tr>
+          <tr>
+            <td>Services</td>
+            <td>One page with the full menu (record review, chronologies, standards of care, merit screening, expert witness support, trial and deposition support, literature research, case summaries, medical expense review), with the niche services pulled out and linked to their own pages.</td>
+            <td>Replaces the Solutions and Services split with one menu. An attorney sees everything in one place and clicks straight to the niche that fits their case.</td>
+          </tr>
+          <tr>
+            <td>About Bianca</td>
+            <td>Keep the current material: your degrees and schools, more than 14 years across critical care, cardiovascular, cath lab, electrophysiology, telemetry, cardiovascular surgery, and clinical education, and your credentials. Add a short plain-language summary at the top: what you do for attorneys, who you help, the states you cover, and how the process is faster. Add a direct link to your LinkedIn.</td>
+            <td>This is the page that ranks and gets cited when someone searches your name, and the page an AI assistant reads before recommending you. The credentials build trust; the summary at the top turns that trust into a reason to call.</td>
+          </tr>
+          <tr>
+            <td>Chronology and Clinical Issue Map</td>
+            <td>Keep. The deliverable, what it includes (source-linked references, searchable index, missing and conflicting record flags, decision points), the outcome it produces, and a line on turnaround.</td>
+            <td>Your most universal service and the easiest entry point for a new client. A dedicated page lets it rank for chronology searches.</td>
+          </tr>
+          <tr>
+            <td>Preliminary Case Screening</td>
+            <td>Keep. The early review: record sufficiency, major clinical concerns, missing evidence, case-strength considerations, and the next questions. Add turnaround, and a flat-fee range if you want pricing shown.</td>
+            <td>The highest-value service for plaintiff intake. The page speaks directly to firms deciding whether to invest in a case.</td>
+          </tr>
+          <tr>
+            <td>DME and IME Observation</td>
+            <td>Keep the current content and add the IME framing plus the state-by-state observer and recording rules from the research, with Georgia&rsquo;s handwritten-notes standard called out. Note the premium, report-based billing.</td>
+            <td>Few consultants offer this, it is premium-billed, and it protects the exam record for plaintiff attorneys. A specific page captures a search almost no one else targets.</td>
+          </tr>
+          <tr>
+            <td>BON Defense Consulting <em>(new)</em></td>
+            <td>What the support involves: EHR and metadata audit, medication timeline reconstruction, standard-of-care narrative, and peer benchmarking. A note on multi-state license exposure. Who it is for: nurses facing discipline and the attorneys who defend them.</td>
+            <td>An underdeveloped, high-margin market with steady demand. The page builds a referral relationship with license-defense attorneys and targets a search almost no consultant has claimed.</td>
+          </tr>
+          <tr>
+            <td>NP and PA Malpractice Review <em>(new)</em></td>
+            <td>The dual standard-of-care analysis (the NP or PA scope plus the supervising physician&rsquo;s duty), the common allegation types, and why advanced-practice claims need a reviewer who has worked in that setting.</td>
+            <td>The fastest-growing malpractice vertical, with high claim values and thin competition. The dual analysis is something most reviewers cannot do, so the page positions you where few others can compete.</td>
+          </tr>
+          <tr>
+            <td>Service Areas: Georgia, Florida, North Carolina <em>(new)</em></td>
+            <td>One page, a few paragraphs per state: the metros and courts you cover and anything state-specific worth noting. Not a page per state.</td>
+            <td>Gives Google and AI assistants a concrete place to associate you with, and answers the coverage question without a page to maintain for each state.</td>
+          </tr>
+          <tr>
+            <td>Resources</td>
+            <td>Keep as-is: the attorney guide, the medical timeline worksheet, the attorney intake form, and the downloadable welcome packet, fee schedule, and intake bundle.</td>
+            <td>Trust-builders. An attorney can see how you work before making contact, which shortens the path to a first engagement.</td>
+          </tr>
+          <tr>
+            <td>Contact</td>
+            <td>Phone and email large and tappable at the top, the non-confidential inquiry note, and optionally a short form with a place for it to go.</td>
+            <td>Every other page points here. Putting the phone and email first removes friction for someone ready to reach out.</td>
+          </tr>
+          <tr>
+            <td>Process</td>
+            <td>Keep. The seven steps from first call to final report, with the conflict check and secure record transfer called out.</td>
+            <td>Sets expectations and shows the confidentiality steps, which helps an attorney decide to engage.</td>
+          </tr>
+          <tr>
+            <td>Technology and Delivery <em>(remove as a page)</em></td>
+            <td>Move the parts worth keeping (secure workflow, source-linked references, defined scope) into a short section on Services. Retire the standalone page.</td>
+            <td>Keeps the main path short. As its own page it is thin and overlaps with Process and the chronology page.</td>
+          </tr>
+          <tr>
+            <td>Solutions <em>(remove as a page)</em></td>
+            <td>Fold the three signature solutions into the top of the Services page, each linking to its detail page.</td>
+            <td>One menu instead of two pages carrying the same message.</td>
+          </tr>
+          <tr>
+            <td>Privacy, Terms, Accessibility, Confidentiality</td>
+            <td>No change.</td>
+            <td>Standard trust and compliance pages. The confidentiality and HIPAA page matters for attorney clients in particular.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Most of this already exists. Your five core pages and three specialty pages are built. The net new
+    work is three pages: BON Defense, NP and PA Malpractice, and Service Areas. Two pages come out
+    (Solutions folds into Services, Technology and Delivery folds into Services), so the total barely
+    moves. The leaner option is to make BON and NP and PA sections on the Services page rather than their
+    own pages, which brings the net new work down to one, the Service Areas page. I lean toward the full
+    three, because being found for that work is the point.</p>
+
+    <div class="callout">
+      <p class="tag">How this compares</p>
+      <p>I looked at other legal nurse consultant sites. Solo consultants run four to eight navigable
+      pages (Home, About, Services, Contact, and sometimes Credentials, Testimonials, Clients). Firms
+      that market themselves run ten to eighteen, and the ones that build a page per service, such as
+      OnPoint LNC, sit at the top of that range. Sites with far more are marketing-heavy law firms
+      building a page per practice area and per city, which is the build this avoids. Your own research
+      positions you as an agency rather than a solo consultant, so a firm-tier site of roughly a dozen
+      pages is on strategy, and since most of it is already built the actual work is small.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow"><span class="n">05</span><span>About the About page</span></p>
+    <h2>Your About page already has the hard part</h2>
+    <p>To answer the question directly: yes, the About page already carries the credentials. It lists all
+    three degrees and schools (Western Governors University, Post University, Calhoun Community College),
+    more than 14 years of experience, your clinical specialties across cardiovascular and critical care,
+    and your certifications (MS, BSN, NEA-BC, CV-BC, LNC). That material is strong and it stays.</p>
+    <p>What it is missing is the part that turns a resume into a reason to call: a few plain sentences at
+    the top that say what you do for attorneys, who you help (plaintiff and defense), the states you
+    cover, and how the AI-assisted process is faster. A direct link to your LinkedIn should sit there
+    too. Same page, one short section added at the top.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow"><span class="n">06</span><span>On search and the states</span></p>
+    <h2>Why I am not building a page for every state</h2>
+
+    <div class="callout">
+      <p class="tag">The short version</p>
+      <p>A page ranks for &ldquo;legal nurse consultant Georgia&rdquo; because that page is about legal
+      nurse consulting in Georgia. Search work added later cannot create a place the site never mentions.
+      For location searches, the content is the search optimization.</p>
+    </div>
+
+    <p>We do not need to rank for every location to meet the goal. Three things do the real work:</p>
+    <ul>
+      <li><strong>Name searches</strong>, where someone who already heard of you looks you up. A clean
+      domain and a strong About page cover it, and the site nearly does already.</li>
+      <li><strong>Near-me searches</strong>, which are won mostly through a Google Business Profile (the
+      business listing with a map, service area, and reviews), not through pages. It is a free listing
+      rather than a content project, and it takes a few weeks to verify, so it is worth starting now
+      rather than last.</li>
+      <li><strong>Naming Georgia, Florida, and North Carolina in plain sentences</strong> on Home and
+      About, and in the site&rsquo;s structured data. One sentence, in a couple of places, gives Google
+      and AI assistants something concrete, with no page sprawl.</li>
+    </ul>
+    <p>So the polish side of search work can wait. Two things I would not wait on: claim the Google
+    Business Profile, and decide now which services and states get named on the site.</p>
+
+    <h3>Where the states appear on the site</h3>
+    <p>Your instinct is right: the states have to show up as real text so search engines and AI
+    assistants have something to match and to quote. Here is where:</p>
+    <ul>
+      <li><strong>Home</strong>, one line near the top: &ldquo;serving attorneys in Georgia, Florida, and
+      North Carolina.&rdquo;</li>
+      <li><strong>About</strong>, in the plain-language summary at the top of the page.</li>
+      <li><strong>The Service Areas page</strong>, a paragraph per state with the metros and courts you
+      cover.</li>
+      <li><strong>The footer</strong>, site-wide: &ldquo;Serving Georgia, Florida, and North
+      Carolina.&rdquo;</li>
+      <li><strong>Structured data</strong>, the machine-readable block in the page code, in the
+      <em>areaServed</em> field. A one-time addition.</li>
+      <li><strong>Google Business Profile</strong>, in the service-area setting.</li>
+    </ul>
+    <p>Visible sentences matter most, because that is what an AI assistant reads. Structured data and page
+    titles help search engines and can be tuned later. If we later decide to go after attorney traffic in
+    Florida and North Carolina specifically, that is when more location pages start to earn their place,
+    and they can be added then with no rework.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow"><span class="n">07</span><span>The structure</span></p>
+    <h2>What this looks like</h2>
+
+    <figure>
+      <svg class="fig" viewBox="0 0 720 348" role="img"
+           aria-label="Site map. Under the domain allenlegalnurses.com sit five pages to keep and sharpen: Home, Services, About, Contact, and Resources. Three pages are recommended as additions, shown with dashed outlines: BON Defense, NP and PA Malpractice, and a single Service Areas page for Georgia, Florida, and North Carolina. The existing DME and IME Observation page is kept and sharpened, not rebuilt.">
+        <rect class="node" x="285" y="18" width="150" height="32" rx="4"/>
+        <text class="mono lbl" x="360" y="38" text-anchor="middle" font-size="12">allenlegalnurses.com</text>
+        <line class="conn" x1="360" y1="50" x2="360" y2="76"/>
+        <line class="conn" x1="78" y1="76" x2="642" y2="76"/>
+        <line class="conn" x1="78"  y1="76" x2="78"  y2="94"/>
+        <line class="conn" x1="219" y1="76" x2="219" y2="94"/>
+        <line class="conn" x1="360" y1="76" x2="360" y2="94"/>
+        <line class="conn" x1="501" y1="76" x2="501" y2="94"/>
+        <line class="conn" x1="642" y1="76" x2="642" y2="94"/>
+        <rect class="node" x="16"  y="94" width="124" height="42" rx="4"/>
+        <rect class="node" x="157" y="94" width="124" height="42" rx="4"/>
+        <rect class="node" x="298" y="94" width="124" height="42" rx="4"/>
+        <rect class="node" x="439" y="94" width="124" height="42" rx="4"/>
+        <rect class="node" x="580" y="94" width="124" height="42" rx="4"/>
+        <text class="lbl" x="78"  y="120" text-anchor="middle">Home</text>
+        <text class="lbl" x="219" y="120" text-anchor="middle">Services</text>
+        <text class="lbl" x="360" y="120" text-anchor="middle">About</text>
+        <text class="lbl" x="501" y="120" text-anchor="middle">Contact</text>
+        <text class="lbl" x="642" y="120" text-anchor="middle">Resources</text>
+        <text class="mono eb opt" x="16" y="172">PAGES I RECOMMEND ADDING</text>
+        <line class="conn-opt dash" x1="219" y1="136" x2="219" y2="192"/>
+        <line class="conn-opt dash" x1="120" y1="192" x2="600" y2="192"/>
+        <line class="conn-opt dash" x1="120" y1="192" x2="120" y2="206"/>
+        <line class="conn-opt dash" x1="360" y1="192" x2="360" y2="206"/>
+        <line class="conn-opt dash" x1="600" y1="192" x2="600" y2="206"/>
+        <rect class="node opt dash" x="30"  y="206" width="180" height="52" rx="4"/>
+        <rect class="node opt dash" x="270" y="206" width="180" height="52" rx="4"/>
+        <rect class="node opt dash" x="510" y="206" width="180" height="52" rx="4"/>
+        <text class="lbl opt" x="120" y="228" text-anchor="middle">BON Defense</text>
+        <text class="lbl opt" x="360" y="228" text-anchor="middle">NP / PA Malpractice</text>
+        <text class="lbl opt" x="600" y="228" text-anchor="middle">Service Areas</text>
+        <text class="mono tiny muted" x="120" y="245" text-anchor="middle">nursing license defense</text>
+        <text class="mono tiny muted" x="360" y="245" text-anchor="middle">dual standard-of-care</text>
+        <text class="mono tiny muted" x="600" y="245" text-anchor="middle">GA / FL / NC, one page</text>
+        <text class="mono tiny muted" x="16" y="284">DME and IME Observation already exists. It gets sharpened, not rebuilt.</text>
+        <line class="conn" x1="16" y1="308" x2="46" y2="308"/>
+        <text class="sub muted" x="54" y="312">Keep and sharpen. Mostly already there.</text>
+        <line class="conn-opt dash" x1="16" y1="330" x2="46" y2="330"/>
+        <text class="sub muted" x="54" y="334">Add. Supported by the market research.</text>
+      </svg>
+      <figcaption>Five pages carry the message and are already built. Three pages are worth adding: two
+      specialty pages the market research supports, and one Service Areas page where the states live as
+      real text. One page for the three states, not one for each.</figcaption>
+    </figure>
+
+    <figure>
+      <svg class="fig" viewBox="0 0 720 272" role="img"
+           aria-label="How people find Bianca. A search, whether her name, the phrase 'legal nurse consultant Georgia', or a question to an AI assistant, is matched by the site's clear pages plus a Google Business Profile and a few directory listings, which leads to a call or an email. The Google Business Profile and clear wording do this work, not a page for every state.">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <rect class="node" x="12" y="46" width="210" height="150" rx="5"/>
+        <text class="mono eb muted" x="28" y="70">SOMEONE SEARCHES</text>
+        <text class="sub" x="28" y="98">your name</text>
+        <text class="sub" x="28" y="124">&ldquo;legal nurse consultant Georgia&rdquo;</text>
+        <text class="sub" x="28" y="150">an AI assistant, asked who does this</text>
+        <text class="mono tiny muted" x="245" y="114" text-anchor="middle">matches</text>
+        <line class="conn" x1="222" y1="121" x2="264" y2="121" marker-end="url(#ah)"/>
+        <rect class="node" x="268" y="30" width="210" height="182" rx="5"/>
+        <text class="mono eb muted" x="284" y="54">ANSWERED BY</text>
+        <text class="sub" x="284" y="84">pages that name the niches and states</text>
+        <text class="sub" x="284" y="120">a Google Business Profile listing</text>
+        <text class="sub" x="284" y="156">LinkedIn and a few directories</text>
+        <text class="mono tiny muted" x="501" y="114" text-anchor="middle">leads to</text>
+        <line class="conn" x1="478" y1="121" x2="520" y2="121" marker-end="url(#ah)"/>
+        <rect class="node" x="524" y="74" width="184" height="94" rx="5"/>
+        <text class="mono eb muted" x="540" y="98">OUTCOME</text>
+        <text class="lbl" x="540" y="124">Calls or emails you</text>
+        <text class="mono tiny muted" x="540" y="144">by phone or email</text>
+        <text class="mono tiny opt" x="268" y="238">the profile and clear wording do this,</text>
+        <text class="mono tiny opt" x="268" y="254">not a page for every state</text>
+      </svg>
+      <figcaption>For a site whose job is to be found and contacted, the Google Business Profile and clear
+      wording that names the states do the work. Pages for individual states only matter if the goal
+      changes to actively pulling in attorney traffic.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <p class="eyebrow"><span class="n">08</span><span>Before I build</span></p>
+    <h2>What I need you to confirm</h2>
+    <p>None of this needs to be decided today. These are the open items:</p>
+
+    <h3>Goal and scope</h3>
+    <ol class="q">
+      <li>Is the site&rsquo;s job only to be found and contacted, or do you also want it bringing in new
+      attorney leads over the next year? This decides how much we add.</li>
+      <li>How lean do you want it? My recommended version is roughly a dozen navigable pages, which
+      matches a marketing-oriented firm. The leaner version makes BON and NP and PA sections on the
+      Services page instead of their own pages, which lands closer to nine or ten, the size of a typical
+      solo consultant site. Either way it is far smaller than a page-per-state build.</li>
+    </ol>
+
+    <h3>Positioning</h3>
+    <ol class="q" start="3">
+      <li>Is the name &ldquo;Allen Legal Nurse Consultants&rdquo; everywhere? One of the strategy decks
+      refers to &ldquo;Purview,&rdquo; so I want to confirm that is dropped.</li>
+      <li>Which states go on the site: Georgia, Florida, and North Carolina, or Georgia, North Carolina,
+      South Carolina, Alabama, and Tennessee? The two decks differ.</li>
+      <li>What leads the message: AI-assisted and faster, or senior clinical judgment? A blend is fine, I
+      just need to know which one is the headline.</li>
+    </ol>
+
+    <h3>Services</h3>
+    <ol class="q" start="6">
+      <li>Do you want to actively market board of nursing defense and NP and PA malpractice? If yes, each
+      gets its own page. If not, they stay as items on the Services page.</li>
+    </ol>
+
+    <h3>Findability</h3>
+    <ol class="q" start="7">
+      <li>Are you comfortable with a Google Business Profile, a public listing with the business name,
+      service area, phone, and client reviews? Any concern about showing a service area rather than a
+      street address?</li>
+      <li>A simple contact form, or strictly phone and email?</li>
+    </ol>
+
+    <h3>Content I need from you</h3>
+    <ol class="q" start="9">
+      <li>Any anonymized case examples or client quotes I can use? The research decks make the point that
+      attorneys buy trust before they buy services.</li>
+      <li>Are the downloadable PDFs (welcome packet, fee schedule, intake bundle) final, or placeholders?</li>
+    </ol>
+
+    <h3>Timing</h3>
+    <ol class="q" start="11">
+      <li>Is this a tighten-what-exists project of a week or two, or a build-it-out project over a couple
+      of months?</li>
+    </ol>
+
+    <p class="closing">My recommendation is to keep your structure, sharpen the five pages that carry the
+    message, add the three the research supports, and start the Google Business Profile now. Everything
+    else can follow once we agree on the picture.</p>
+  </section>
+
+</main>
+</body>
+</html>
