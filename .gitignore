@@ -40,3 +40,11 @@ next-env.d.ts
 /.sites-runtime/
 /outputs/
 /work/
+
+# typescript build cache
+*.tsbuildinfo
+
+# internal working notes, not part of the site
+PLAN.md
+SITE_STRUCTURE_PROPOSAL.md
+SITE_STRUCTURE_PROPOSAL.html
