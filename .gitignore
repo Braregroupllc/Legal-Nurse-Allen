@@ -1,17 +1,5 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
 
 # next.js
 /.next/
@@ -23,11 +11,8 @@
 
 # debug
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*
 
 # vercel
@@ -35,16 +20,14 @@ yarn-error.log*
 
 # typescript
 next-env.d.ts
-/dist/
-/.wrangler/
-/.sites-runtime/
-/outputs/
-/work/
-
-# typescript build cache
 *.tsbuildinfo
 
-# internal working notes, not part of the site
+# internal working notes and source material, not part of the site
 PLAN.md
 SITE_STRUCTURE_PROPOSAL.md
 SITE_STRUCTURE_PROPOSAL.html
+STRATEGY_AND_RECOMMENDATIONS.md
+/Research Notes/
+
+# stray build output from the old toolchain
+/dist/
