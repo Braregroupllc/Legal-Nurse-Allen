@@ -141,7 +141,9 @@ test("Person schema carries Bianca's credentials for E-E-A-T", async () => {
   const html = await (await get("/about")).text();
   assert.match(html, /"Person"/);
   assert.match(html, /"hasCredential"/);
-  assert.match(html, /NEA-BC/);
+  assert.match(html, /CV-BC/);
+  assert.match(html, /MEDSURG-BC/);
+  assert.doesNotMatch(html, /NEA-BC/, "NEA-BC lapsed and must not appear anywhere");
   assert.match(html, /linkedin\.com/);
 });
 
@@ -157,7 +159,7 @@ test("each service area section carries substantive unique content", async () =>
   for (const cite of ["9-11-9.1", "766.203", "9(j)", "29-26-122", "15-79-125"]) {
     assert.ok(html.includes(cite), `missing the state-specific citation ${cite}`);
   }
-  assert.match(html, /does not provide that affidavit/i, "missing the scope-of-role disclaimer");
+  assert.match(html, /separate expert engagement, not part of the consulting work/i, "missing the scope-of-role disclaimer");
 });
 
 test("the route table and sitemap agree", () => {

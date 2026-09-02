@@ -10,13 +10,14 @@ export const LINKEDIN="https://www.linkedin.com/in/innovativebianca/";
 export const TURNAROUND="24 to 72 hours";
 export const STATES=["Georgia","Florida","North Carolina","Tennessee","South Carolina"];
 export const STATES_SENTENCE="Georgia, Florida, North Carolina, Tennessee, and South Carolina";
+export const COVERAGE=`Serving attorneys in ${STATES_SENTENCE}, with select engagements available in additional markets.`;
 
 // path -> [title, description]
 export const PAGES:Record<string,[string,string]>={
 "/":["Medical Record Review for Attorneys","Registered nurse consulting for attorneys in Georgia, Florida, North Carolina, Tennessee and South Carolina. Most reviews delivered in 24 to 72 hours."],
 "/services":["Legal Nurse Consulting Services","Medical record review, chronologies, standards-of-care analysis, merit screening, expert witness support and trial preparation for plaintiff and defense teams."],
 "/service-areas":["Service Areas: GA, FL, NC, TN, SC","Legal nurse consulting for attorneys in Georgia, Florida, North Carolina, Tennessee and South Carolina, including Atlanta, Tampa, Charlotte and Nashville."],
-"/about":["Bianca Allen, MS, BSN, LNC","Bianca Allen, MS, BSN, NEA-BC, CV-BC, LNC. More than 14 years in cardiovascular nursing, critical care and clinical leadership, applied to medical litigation."],
+"/about":["Bianca Allen, MS, BSN, CV-BC, LNC","Bianca Allen, MS, BSN, CV-BC, MEDSURG-BC, CRAT, LNC. More than 15 years in cardiovascular and critical care nursing, applied to medically complex litigation."],
 "/faq":["Frequently Asked Questions","What a legal nurse consultant does, how engagements and fees work, which states are served, turnaround times, and how medical records are handled securely."],
 "/contact":["Request a Consultation","Begin with a brief, non-confidential email inquiry. Conflict review and a signed agreement are completed before any medical records are received."],
 "/process":["How an Engagement Works","Seven steps from first consultation to final report, including conflict check, written scope and fees, secure record transfer, and clinical review."],
@@ -48,12 +49,12 @@ const PERSON={
 "@type":"Person",
 "@id":`${SITE_URL}/about#bianca-allen`,
 name:"Bianca Allen",
-honorificSuffix:"MS, BSN, NEA-BC, CV-BC, LNC",
+honorificSuffix:"MS, BSN, CV-BC, MEDSURG-BC, CRAT, LNC",
 jobTitle:"Legal Nurse Consultant",
-description:"Registered nurse with more than 14 years of experience across cardiovascular nursing, critical care, clinical education and nursing leadership, working with attorneys on medically complex litigation.",
+description:"Registered nurse with more than 15 years of experience across cardiovascular nursing, critical care, medical-surgical nursing and clinical education, working with attorneys on medically complex litigation.",
 url:`${SITE_URL}/about`,
 sameAs:[LINKEDIN],
-knowsAbout:["Medical record review","Medical chronology","Standard of care analysis","Merit screening","Defense medical examination observation","Cardiovascular nursing","Critical care nursing","Nursing documentation"],
+knowsAbout:["Medical record review","Medical chronology","Standard of care analysis","Merit screening","Defense medical examination observation","Cardiovascular nursing","Critical care nursing","Medical-surgical nursing","Nursing documentation"],
 alumniOf:[
 {"@type":"CollegeOrUniversity",name:"Western Governors University"},
 {"@type":"CollegeOrUniversity",name:"Post University"},
@@ -61,8 +62,9 @@ alumniOf:[
 hasCredential:[
 {"@type":"EducationalOccupationalCredential",credentialCategory:"degree",name:"Master of Science in Leadership and Management"},
 {"@type":"EducationalOccupationalCredential",credentialCategory:"degree",name:"Bachelor of Science in Nursing"},
-{"@type":"EducationalOccupationalCredential",credentialCategory:"certification",name:"NEA-BC, Nurse Executive Advanced Board Certified"},
 {"@type":"EducationalOccupationalCredential",credentialCategory:"certification",name:"CV-BC, Cardiac Vascular Nursing Certification"},
+{"@type":"EducationalOccupationalCredential",credentialCategory:"certification",name:"MEDSURG-BC, Medical-Surgical Nursing Certification"},
+{"@type":"EducationalOccupationalCredential",credentialCategory:"certification",name:"CRAT, Certified Rhythm Analysis Technician"},
 {"@type":"EducationalOccupationalCredential",credentialCategory:"certification",name:"LNC, Legal Nurse Consultant"}]};
 
 // Organization-level structured data, rendered on every page. The Person block is
