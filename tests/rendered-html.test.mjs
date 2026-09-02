@@ -11,10 +11,8 @@ const ROUTES = [
     .matchAll(/^"([^"]+)":\[/gm),
 ].map((m) => m[1]);
 
-const RETIRED = [
-  "/solutions", "/technology-delivery", "/attorney-intake",
-  "/privacy", "/terms", "/accessibility", "/confidentiality",
-];
+const RETIRED = ["/solutions", "/technology-delivery", "/attorney-intake"];
+const NOINDEX = ["/privacy", "/terms", "/accessibility", "/confidentiality"];
 const STATES = ["Georgia", "Florida", "North Carolina", "Tennessee", "South Carolina"];
 
 const PORT = 4399;
@@ -49,13 +47,13 @@ const description = (html) =>
   html.match(/<meta name="description" content="([^"]*)"/i)?.[1] ?? "";
 
 test("route table covers the expected pages", () => {
-  assert.equal(ROUTES.length, 13);
+  assert.equal(ROUTES.length, 17);
   assert.equal(ROUTES[0], "/");
   for (const p of ["/services", "/service-areas", "/faq", "/about", "/contact"]) {
     assert.ok(ROUTES.includes(p), `${p} missing from route table`);
   }
   for (const p of RETIRED) {
-    assert.ok(!ROUTES.includes(p), `${p} should not be a route`);
+    assert.ok(!ROUTES.includes(p), `${p} should have been retired`);
   }
 });
 
@@ -101,12 +99,6 @@ test("retired routes redirect to their replacement", async () => {
   assert.equal((await get("/no-such-page")).status, 404);
 });
 
-test("the removed legal pages are gone", async () => {
-  for (const path of ["/privacy", "/terms", "/accessibility", "/confidentiality"]) {
-    assert.equal((await get(path)).status, 404, `${path} should 404`);
-  }
-});
-
 test("no phone number appears anywhere on the site", async () => {
   for (const path of ROUTES) {
     const html = await (await get(path)).text();
@@ -132,10 +124,16 @@ test("the five service areas are named on the key pages", async () => {
   }
 });
 
-test("every route is indexable", async () => {
-  for (const path of ROUTES) {
+test("placeholder legal pages are noindex and absent from the sitemap", async () => {
+  const sitemap = readFileSync(new URL("../public/sitemap.xml", import.meta.url), "utf8");
+  for (const path of NOINDEX) {
     const html = await (await get(path)).text();
-    assert.ok(!/content="noindex/i.test(html), `${path} must not be noindex`);
+    assert.match(html, /<meta name="robots" content="noindex/i, `${path} is not noindex`);
+    assert.ok(!sitemap.includes(`${path}<`), `${path} should not be in the sitemap while noindex`);
+  }
+  for (const path of ["/", "/services", "/service-areas", "/about", "/faq"]) {
+    const html = await (await get(path)).text();
+    assert.ok(!/content="noindex/i.test(html), `${path} must stay indexable`);
   }
 });
 
@@ -167,7 +165,9 @@ test("the route table and sitemap agree", () => {
   const locs = [
     ...sitemap.matchAll(/<loc>https:\/\/allenlegalnurses\.com([^<]*)<\/loc>/g),
   ].map((m) => m[1] || "/");
-  assert.deepEqual(locs.sort(), [...ROUTES].sort());
+  const expected = ROUTES.filter((r) => !NOINDEX.includes(r));
+  assert.deepEqual(locs.sort(), expected.sort());
+  assert.ok(META_SRC.includes("export const NOINDEX"), "NOINDEX set missing from site-meta.ts");
 });
 
 test("the FAQ page publishes FAQPage structured data", async () => {

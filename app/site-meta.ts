@@ -25,9 +25,18 @@ export const PAGES:Record<string,[string,string]>={
 "/case-screening":["Preliminary Case Screening","An early clinical review clarifying record sufficiency, significant concerns, missing evidence and the questions to resolve before committing to a case."],
 "/dme-clinical-observation":["DME & IME Observation","Independent clinical preparation, observation and objective written reporting for attorneys involved in defense or independent medical examinations."],
 "/legal-nurse-consultant-guide":["What Does a Legal Nurse Consultant Do?","How nursing expertise clarifies medical evidence, what a legal nurse consultant contributes to a case, and when an attorney should bring one into a matter."],
-"/medical-timeline-worksheet":["Medical Timeline Worksheet","A printable worksheet for capturing providers, dates, clinical events, source pages and missing records before a formal medical record review begins."]};
+"/medical-timeline-worksheet":["Medical Timeline Worksheet","A printable worksheet for capturing providers, dates, clinical events, source pages and missing records before a formal medical record review begins."],
+"/privacy":["Privacy Policy","How information submitted through the Allen Legal Nurse Consultants website is collected, used, protected and retained, and the choices available to you."],
+"/terms":["Terms of Use","Conditions governing use of the Allen Legal Nurse Consultants website, including the absence of a consultant-client relationship and limits on liability."],
+"/accessibility":["Accessibility Statement","Our commitment to an inclusive and usable digital experience, the standards applied, known limitations, and how to request assistance or give feedback."],
+"/confidentiality":["Confidentiality & HIPAA","How communications, medical records and protected health information are handled, and why records must never be submitted through this public website."]};
 
 export const ROUTES=Object.keys(PAGES);
+
+// The four legal pages are still placeholder text. Indexing placeholder policy
+// language on a YMYL site is a quality risk, so they stay out of the index until
+// real counsel-reviewed content lands (PLAN.md section C2).
+export const NOINDEX=new Set(["/privacy","/terms","/accessibility","/confidentiality"]);
 
 export function metaFor(path:string){
   const p=PAGES[path];
