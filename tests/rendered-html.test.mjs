@@ -178,10 +178,11 @@ test("the FAQ page publishes FAQPage structured data", async () => {
   assert.match(html, /"acceptedAnswer"/);
 });
 
-test("resources does not link to PDFs while downloads are disabled", async () => {
+test("resources has no download links or missing PDFs", async () => {
   const html = await (await get("/resources")).text();
-  assert.ok(!/href="\/downloads\//.test(html), "resources links to PDFs that do not exist yet");
-  assert.match(html, /Request by email/i);
+  assert.ok(!/href="\/downloads\//.test(html), "resources links to non-existent PDFs");
+  assert.ok(!/\.pdf/i.test(html), "resources still references a PDF");
+  assert.ok(!/welcome packet|fee schedule|intake bundle/i.test(html), "the removed downloads block is still present");
 });
 
 test("robots.txt and sitemap.xml are served", async () => {

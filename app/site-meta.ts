@@ -21,7 +21,7 @@ export const PAGES:Record<string,[string,string]>={
 "/faq":["Frequently Asked Questions","What a legal nurse consultant does, how engagements and fees work, which states are served, turnaround times, and how medical records are handled securely."],
 "/contact":["Request a Consultation","Begin with a brief, non-confidential email inquiry. Conflict review and a signed agreement are completed before any medical records are received."],
 "/process":["How an Engagement Works","Seven steps from first consultation to final report, including conflict check, written scope and fees, secure record transfer, and clinical review."],
-"/resources":["Attorney Resources","An attorney guide to legal nurse consulting, a printable medical timeline worksheet, and welcome and intake materials available on request by email."],
+"/resources":["Attorney Resources","An attorney guide to the legal nurse consultant role, a medical timeline worksheet, and answers to the questions attorneys ask most before an engagement."],
 "/chronology-clinical-issue-map":["Medical Chronology & Issue Map","A searchable, source-linked medical chronology that organizes clinical events, decision points and documentation gaps around the issues counsel defines."],
 "/case-screening":["Preliminary Case Screening","An early clinical review clarifying record sufficiency, significant concerns, missing evidence and the questions to resolve before committing to a case."],
 "/dme-clinical-observation":["DME & IME Observation","Independent clinical preparation, observation and objective written reporting for attorneys involved in defense or independent medical examinations."],
